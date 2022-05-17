@@ -20,6 +20,9 @@ public class ListNode {
     }
 
     public static ListNode of(int[] nums) {
+        if (nums == null) {
+            return null;
+        }
         ListNode root = new ListNode(nums[0]);
         ListNode last = root;
         for (int i = 1; i < nums.length; i++) {

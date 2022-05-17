@@ -40,41 +40,9 @@ public class LeetCode2 {
     @Test
     public void test(){
         int[] l1 = {9}, l2 = {1,9,9,9,9,9,9,9,9,9};
-        final ListNode listNode = addTwoNumbers(genList(l1), genList(l2));
-        System.out.println(toString(listNode));
+        final ListNode listNode = addTwoNumbers(ListNode.of(l1), ListNode.of(l2));
+        System.out.println(listNode.toString());
     }
 
-    private String toString(ListNode listNode) {
-        if (listNode.next == null) {
-            return String.valueOf(listNode.val);
-        }
-        return listNode.val + toString(listNode.next) ;
-    }
-
-    private ListNode genList(int[] nums) {
-        ListNode root = new ListNode(nums[0]);
-        ListNode last = root;
-        for (int i = 1; i < nums.length; i++) {
-            int val = nums[i];
-            ListNode cur = new ListNode(val);
-            last.next = cur;
-            last = cur;
-        }
-        return root;
-    }
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode() {
-        }
-        ListNode(int val) {
-            this.val = val;
-        }
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
-    }
 
 }

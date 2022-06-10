@@ -1,4 +1,4 @@
-package com.github.xuqiu.leetcode.p_1_25;
+package com.github.xuqiu.leetcode.p_1_30;
 
 import com.alibaba.fastjson.JSON;
 

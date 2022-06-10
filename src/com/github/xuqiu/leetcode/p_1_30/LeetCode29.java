@@ -1,4 +1,4 @@
-package com.github.xuqiu.leetcode;
+package com.github.xuqiu.leetcode.p_1_30;
 
 import org.junit.Test;
 

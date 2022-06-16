@@ -14,5 +14,11 @@ public final class NumberUtil {
         }
         System.out.println();
     }
+    public static void printBin(long num){
+        for(int i=63;i>=0;i--){
+            System.out.print((num & (1L<<i))==0 ? "0" : "1");
+        }
+        System.out.println();
+    }
 
 }

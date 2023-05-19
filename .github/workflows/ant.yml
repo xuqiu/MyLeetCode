@@ -16,7 +16,7 @@ jobs:
       - name: Deploy Stage
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.github.com/repos/alipay/ant-ray'
+          url: 'https://api.github.com/repos/xuqiu/MyLeetCode'
           method: 'GET'
           username: ${{ secrets.AWX_USER }}
           password: ${{ secrets.AWX_PASSWORD }}

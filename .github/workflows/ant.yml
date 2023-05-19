@@ -13,12 +13,23 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy Stage
+#      - name: Deploy Stage
+#        uses: fjogeleit/http-request-action@v1
+#        with:
+#          url: 'https://api.github.com/repos/xuqiu/MyLeetCode'
+#          method: 'GET'
+#          username: ${{ secrets.AWX_USER }}
+#          password: ${{ secrets.AWX_PASSWORD }}
+#          customHeaders: '{"Content-Type": "application/json"}'
+#          data: '{"key_1": "value_1", "key_2": "value_2"}'
+#
+      - name: Make Request
+        id: myRequest
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.github.com/repos/xuqiu/MyLeetCode'
-          method: 'GET'
-          username: ${{ secrets.AWX_USER }}
-          password: ${{ secrets.AWX_PASSWORD }}
-          customHeaders: '{"Content-Type": "application/json"}'
-          data: '{"key_1": "value_1", "key_2": "value_2"}'
+          url: "https://api.github.com/repos/xuqiu/MyLeetCode"
+      - name: Show Response
+        run: |
+          echo ${{ steps.myRequest.outputs.response }}
+          echo ${{ steps.myRequest.outputs.headers }}
+          echo ${{ fromJson(steps.myRequest.outputs.response).description }}

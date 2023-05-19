@@ -1,26 +1,24 @@
-# This workflow will build a Java project with Ant
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-ant
-
+# github action 试用
 name: Java CI
 
 on:
-  push:
-    branches: [ "master" ]
+  push: # 触发事件
+    branches: [ "master" ] #限制生效分支
   pull_request:
     branches: [ "master" ]
 
 jobs:
   deployment:
-    runs-on: ubuntu-latest
-    steps:
+    runs-on: ubuntu-latest #镜像
+    steps: #执行步骤
       - name: Make Request
         id: myRequest
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: "https://api.github.com/repos/xuqiu/MyLeetCode"
+        uses: fjogeleit/http-request-action@v1 #任务
+        with: #任务参数
+          url: "https://api.github.com/"
           method: 'GET'
-      - name: Show Response
+      - name: Show Response #step按序执行,可获取上一步的返回结果
         run: |
           echo ${{ steps.myRequest.outputs.response }}
           echo ${{ steps.myRequest.outputs.headers }}
-          echo ${{ fromJson(steps.myRequest.outputs.response).description }}
+          echo ${{ fromJson(steps.myRequest.outputs.response).current_user_url }}

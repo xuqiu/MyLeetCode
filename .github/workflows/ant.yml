@@ -16,8 +16,8 @@ jobs:
       - name: Deploy Stage
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://bing.com'
-          method: 'POST'
+          url: 'https://api.github.com/repos/alipay/ant-ray'
+          method: 'GET'
           username: ${{ secrets.AWX_USER }}
           password: ${{ secrets.AWX_PASSWORD }}
           customHeaders: '{"Content-Type": "application/json"}'

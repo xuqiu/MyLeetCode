@@ -1,4 +1,5 @@
 # github action 试用
+# http://hooktest.com
 name: star
 
 on:

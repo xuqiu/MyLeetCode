@@ -1,5 +1,5 @@
 # github action 试用
-name: Java CI
+name: star
 
 on:
   star: # 触发事件

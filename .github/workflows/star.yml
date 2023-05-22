@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest #镜像
     steps: #执行步骤
       - name: Star Count
-        id: repoStars
+        id: repo-stars
         uses: alanhg/repo-star-count-action@master
       - name: Notify
         run: |

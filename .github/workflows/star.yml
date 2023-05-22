@@ -2,7 +2,7 @@
 name: star
 
 on:
-  star: # 触发事件
+  watch: # 触发事件
     actions: started
 
 jobs:

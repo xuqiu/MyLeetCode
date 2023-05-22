@@ -16,3 +16,4 @@ jobs:
         run: |
           echo ${{github.event.sender.login}}
           echo ${{ steps.repo-stars.outputs.stars }}
+          echo '${{toJSON(steps.repo-stars.outputs}}}'

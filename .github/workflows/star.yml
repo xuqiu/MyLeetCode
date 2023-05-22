@@ -14,4 +14,4 @@ jobs:
         uses: alanhg/repo-star-count-action@master
       - name: Notify
         run: |
-          echo ${{ toJson(steps.repo-stars.outputs) }}
+          echo ${{ toJSON(steps.repo-stars) }}

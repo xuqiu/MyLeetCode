@@ -9,14 +9,9 @@ jobs:
   deployment:
     runs-on: ubuntu-latest #镜像
     steps: #执行步骤
-      - name: Make Request
-        id: myRequest
-        uses: fjogeleit/http-request-action@v1 #任务
-        with: #任务参数
-          url: "https://api.github.com/"
-          method: 'GET'
-      - name: Show Response #step按序执行,可获取上一步的返回结果
+      - name: Star Count
+        id: repoStars
+        uses: alanhg/repo-star-count-action@master
+      - name: Notify
         run: |
-          echo ${{ steps.myRequest.outputs.response }}
-          echo ${{ steps.myRequest.outputs.headers }}
-          echo ${{ fromJson(steps.myRequest.outputs.response).current_user_url }}
+          echo ${{ steps.repo-stars.outputs }}

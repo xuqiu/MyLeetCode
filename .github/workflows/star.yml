@@ -14,4 +14,5 @@ jobs:
         uses: alanhg/repo-star-count-action@master
       - name: Notify
         run: |
-          echo ${{ toJSON(steps.repo-stars) }}
+          echo ${{github.event.sender.login}}
+          echo ${{ steps.repo-stars.outputs.stars }}

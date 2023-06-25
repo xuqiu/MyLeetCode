@@ -1,1 +1,1 @@
-https://my.com
+https://github.com

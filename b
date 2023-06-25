@@ -1,1 +1,1 @@
-https://github.com/
+https://api.github.com/user

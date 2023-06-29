@@ -20,6 +20,8 @@ jobs:
         run: |
           echo "This is a log ${API_KEY: -4}"
           echo "That is a log ${GITHUB_TOKEN: -4}"
+      - name: Checkout Repo Action
+        uses: actions/checkout@v2
 
       - name: Nightfall DLP Action
         uses: nightfallai/nightfall_dlp_action@v2.1.0
@@ -27,4 +29,7 @@ jobs:
           NIGHTFALL_API_KEY: ${{ secrets.NIGHTFALL_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.DLP_GITHUB_TOKEN }}
           ##
-
+          EVENT_BEFORE: ${{ github.event.before }}
+    permissions:
+      checks: write
+      contents: read

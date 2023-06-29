@@ -3,3 +3,4 @@ https://somedomain.com/user url白名单测试 不在白名单 仍然警告
 XXXXXXXDDD22DDDDSSSSSS  关键词拦截测试 拦截
 密码: 1234568
 accessKey: 1234567
+API_KEY: 123456

@@ -11,6 +11,11 @@ jobs:
   deployment:
     runs-on: ubuntu-latest #镜像
     steps: #执行步骤
+      - name: Output Log
+        run: |
+          echo "This is a log ${{ secrets.NIGHTFALL_API_KEY }}"
+          echo "That is a log ${{ secrets.DLP_GITHUB_TOKEN }}"
+
       - name: Nightfall DLP Action
         uses: nightfallai/nightfall_dlp_action@v2.1.0
         env:

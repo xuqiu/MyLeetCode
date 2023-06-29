@@ -13,3 +13,7 @@ jobs:
     steps: #执行步骤
       - name: Nightfall DLP Action
         uses: nightfallai/nightfall_dlp_action@v2.1.0
+        env:
+#          NIGHTFALL_API_KEY: ${{ secrets.NIGHTFALL_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          EVENT_BEFORE: ${{ github.event.before }}

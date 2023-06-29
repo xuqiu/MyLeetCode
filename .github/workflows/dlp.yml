@@ -15,5 +15,7 @@ jobs:
         uses: nightfallai/nightfall_dlp_action@v2.1.0
         env:
           NIGHTFALL_API_KEY: ${{ secrets.NIGHTFALL_API_KEY }}
+          #NF-afZIao2GK4mZJOId3pX3nUnj9IDQ3fo1
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EVENT_BEFORE: ${{ github.event.before }}
+

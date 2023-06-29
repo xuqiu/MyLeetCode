@@ -12,9 +12,12 @@ jobs:
     runs-on: ubuntu-latest #镜像
     steps: #执行步骤
       - name: Output Log
+        env:
+          API_KEY: ${{ secrets.NIGHTFALL_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.DLP_GITHUB_TOKEN }}
         run: |
-          echo "This is a log ${{ secrets.NIGHTFALL_API_KEY }}"
-          echo "That is a log ${{ secrets.DLP_GITHUB_TOKEN }}"
+          echo "This is a log $API_KEY"
+          echo "That is a log $GITHUB_TOKEN"
 
       - name: Nightfall DLP Action
         uses: nightfallai/nightfall_dlp_action@v2.1.0

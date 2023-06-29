@@ -1,0 +1,15 @@
+# github action 试用
+name: Java CI
+
+on:
+  push: # 触发事件
+    branches: [ "master" ] #限制生效分支
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest #镜像
+    steps: #执行步骤
+      - name: Nightfall DLP Action
+        uses: nightfallai/nightfall_dlp_action@v2.1.0

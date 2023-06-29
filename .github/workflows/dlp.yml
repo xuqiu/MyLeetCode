@@ -27,7 +27,8 @@ jobs:
           NIGHTFALL_API_KEY: ${{ secrets.NIGHTFALL_API_KEY }}
           #NF-afZIao2GK4mZJOId3pX3nUnj9IDQ3fo1
           GITHUB_TOKEN: ${{ secrets.DLP_GITHUB_TOKEN }}
-          #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
+          #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
+          ##
           ##
           EVENT_BEFORE: ${{ github.event.before }}
 

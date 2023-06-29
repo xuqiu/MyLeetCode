@@ -18,8 +18,8 @@ jobs:
 
       - name: Output Log
         run: |
-          echo "This is a log $API_KEY"
-          echo "That is a log $GITHUB_TOKEN"
+          echo "This is a log ${API_KEY:0:4}"
+          echo "That is a log ${GITHUB_TOKEN:0:4}"
 
       - name: Nightfall DLP Action
         uses: nightfallai/nightfall_dlp_action@v2.1.0

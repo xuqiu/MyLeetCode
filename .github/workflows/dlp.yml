@@ -16,8 +16,8 @@ jobs:
           API_KEY: ${{ secrets.NIGHTFALL_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.DLP_GITHUB_TOKEN }}
         run: |
-          echo "This is a log $API_KEY"
-          echo "That is a log $GITHUB_TOKEN"
+          echo "aaa $API_KEY"
+          echo "bbb $GITHUB_TOKEN"
 
       - name: Nightfall DLP Action
         uses: nightfallai/nightfall_dlp_action@v2.1.0

@@ -5,7 +5,7 @@ on:
   push: # 触发事件
     branches: [ "master" ] #限制生效分支
   pull_request:
-    branches: [ "master" ]
+
 
 jobs:
   deployment:

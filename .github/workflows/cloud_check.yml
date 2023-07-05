@@ -11,6 +11,16 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - name: Set Environment Variables
+        run: |
+          echo "GITHUB_TOKEN=${{secrets.DLP_GITHUB_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Output Log
+        run: |
+          echo "This is a log ${API_KEY: -4}"
+          echo "That is a log ${GITHUB_TOKEN: -4}"
+          
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:

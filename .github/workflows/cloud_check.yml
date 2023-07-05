@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Set Environment Variables
         run: |
-          echo "GITHUB_TOKEN=${{secrets.DLP_GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{secrets.MPR_GITHUB_TOKEN }}" >> $GITHUB_ENV
 
       - name: Output Log
         run: |
@@ -49,7 +49,7 @@ jobs:
       - name: Update PR status and add comment
         uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.DLP_GITHUB_TOKEN }}
+          github-token: ${{ secrets.MPR_GITHUB_TOKEN }}
           script: |
             const { data: pullRequest } = await github.pulls.get({
               owner: context.repo.owner,

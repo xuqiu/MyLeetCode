@@ -39,10 +39,8 @@ jobs:
       # 更新PR状态和添加评论
       - name: Update PR status and add comment
         uses: actions/github-script@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.DLP_GITHUB_TOKEN }}
           script: |
             const { data: pullRequest } = await github.pulls.get({
               owner: context.repo.owner,

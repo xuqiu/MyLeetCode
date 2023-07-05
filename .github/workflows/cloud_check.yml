@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: master
 
       # 在这里添加您的自动审核逻辑
       - name: Run review script

@@ -20,8 +20,14 @@ jobs:
           # 例如：REVIEW_STATUS="不通过，原因是..."
           # 如果审核通过，设置一个变量来存储通过消息
           # 例如：REVIEW_STATUS="通过"
-        env:
-          REVIEW_STATUS: '你代码写的也太好了!!!'
+
+          # 示例逻辑：根据文件修改数量判断审核结果
+          CHANGED_FILES=$(git diff --name-only origin/master)
+          if [[ $(echo "$CHANGED_FILES" | wc -l) -gt 10 ]]; then
+            REVIEW_STATUS="不通过，修改文件数量超过10个"
+          else
+            REVIEW_STATUS="通过"
+          fi
 
       # 添加评论到PR中
       - name: Add comment to PR
@@ -35,9 +41,16 @@ jobs:
               pull_number: context.issue.number
             });
 
-            const comment = `
-              自动审核结果：${{ env.REVIEW_STATUS }}
-            `;
+            let comment;
+            if (process.env.REVIEW_STATUS === '通过') {
+              comment = `
+                自动审核结果：审核通过！
+              `;
+            } else {
+              comment = `
+                自动审核结果：${{ env.REVIEW_STATUS }}
+              `;
+            }
 
             await github.issues.createComment({
               owner: context.repo.owner,

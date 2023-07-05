@@ -14,6 +14,7 @@ jobs:
 
       # 在这里添加您的自动审核逻辑
       - name: Run review script
+        id: review
         run: |
           # 运行自动审核脚本或命令
           # 如果审核不通过，设置一个变量来存储原因
@@ -29,8 +30,10 @@ jobs:
             REVIEW_STATUS="通过"
           fi
 
-      # 添加评论到PR中
-      - name: Add comment to PR
+          echo "::set-output name=status::${REVIEW_STATUS}"
+
+      # 更新PR状态和添加评论
+      - name: Update PR status and add comment
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -46,10 +49,22 @@ jobs:
               comment = `
                 自动审核结果：审核通过！
               `;
+              await github.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                state: 'approved'
+              });
             } else {
               comment = `
                 自动审核结果：${{ env.REVIEW_STATUS }}
               `;
+              await github.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                state: 'changes_requested'
+              });
             }
 
             await github.issues.createComment({

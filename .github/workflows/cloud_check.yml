@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Set Environment Variables
         run: |
-          echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{secrets.MPR_GITHUB_TOKEN }}" >> $GITHUB_ENV
 
       - name: Output Log
         run: |

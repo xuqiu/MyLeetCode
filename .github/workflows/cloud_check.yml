@@ -1,0 +1,47 @@
+name: Auto Review PR
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  auto_review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 在这里添加您的自动审核逻辑
+      - name: Run review script
+        run: |
+          # 运行自动审核脚本或命令
+          # 如果审核不通过，设置一个变量来存储原因
+          # 例如：REVIEW_STATUS="不通过，原因是..."
+          # 如果审核通过，设置一个变量来存储通过消息
+          # 例如：REVIEW_STATUS="通过"
+        env:
+          REVIEW_STATUS: '你代码写的也太好了!!!'
+
+      # 添加评论到PR中
+      - name: Add comment to PR
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: pullRequest } = await github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+
+            const comment = `
+              自动审核结果：${{ env.REVIEW_STATUS }}
+            `;
+
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });

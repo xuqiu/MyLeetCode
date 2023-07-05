@@ -14,7 +14,7 @@ jobs:
       - name: Set Environment Variables
         run: |
           echo "API_KEY=${{ secrets.NIGHTFALL_API_KEY }}" >> $GITHUB_ENV
-          echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{secrets.MPR_GITHUB_TOKEN }}" >> $GITHUB_ENV
 
       - name: Output Log
         run: |

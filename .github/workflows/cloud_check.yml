@@ -10,6 +10,9 @@ jobs:
   deployment:
     permissions:
       id-token: write
+      contents: read
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Set Environment Variables

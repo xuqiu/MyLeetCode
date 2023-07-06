@@ -66,10 +66,22 @@ jobs:
               comment = `
                 自动审核结果：审核通过！
               `;
+              await github.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                state: 'approved'
+              });
             } else {
               comment = `
                 自动审核结果：${{ env.REVIEW_STATUS }}
               `;
+              await github.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                state: 'changes_requested'
+              });
             }
 
             await github.issues.createComment({

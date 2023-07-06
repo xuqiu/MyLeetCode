@@ -11,8 +11,9 @@
     <dependencies>
         <!-- 在此处添加依赖 -->
         <dependency>
-            <groupId>com.alipay.faas.faasmiddleware</groupId>
-            <artifactId>prehookchecker-model</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.13.3</version>
         </dependency>
     </dependencies>
 </project>

@@ -6,77 +6,95 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: Make Request
+      - name: getToken
         id: myRequest
         uses: fjogeleit/http-request-action@v1 #任务
-        with: #任务参数
-          url: "https://api.github.com/"
-          method: 'GET'
+        with:
+          url: 'https://tcloudrunconsole.openapi.cloudrun.cloudbaseapp.cn/v2/login/serviceaccount'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json"}'
+          data: '{ "parent_uid":"14955076510547972", "private_key": "PpaeApOVW+ygrCC5pKYJaOXFY1kQpG7kdr7KYS5VshgPJNlcKL7YU6KuEASY2PGIEG131TT2FUutRmnfPOMJLPbx06xReel8zIDMnLqQwuSh9d2f3yydS15bFkzpUaANKzOAivY7dTBeTZTkpkmveYqSLaPXHqgegXzYDOrRCSw=" }'
+
+      - name: showToken #step按序执行,可获取上一步的返回结果
+        run: |
+          echo ${{ steps.getToken.outputs.response }}
+          echo ${{ steps.getToken.outputs.headers }}
+          echo ${{fromJson(steps.getToken.outputs.response).data.access_token}}
+
+      - name: triggerFlow
+        id: myRequest
+        uses: fjogeleit/http-request-action@v1 #任务
+        with:
+          url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/execute?projectId=293&spaceId=600087'
+          method: 'POST'
+          bearerToken: '${{fromJson(steps.getToken.outputs.response).data.access_token}}'
+          customHeaders: '{"Content-Type": "application/json"}'
+          data: '{"templateId":795,"branch":"master"}'
+
       - name: Show Response #step按序执行,可获取上一步的返回结果
         run: |
-          echo ${{ steps.myRequest.outputs.response }}
-          echo ${{ steps.myRequest.outputs.headers }}
-          echo ${{ fromJson(steps.myRequest.outputs.response).current_user_url }}
+          echo ${{ steps.triggerFlow.outputs.response }}
+          echo ${{ steps.triggerFlow.outputs.headers }}
 
-
-      # 在这里添加您的自动审核逻辑
-      - name: Run review script
-        id: review
-        run: |
-          # 运行自动审核脚本或命令
-          # 如果审核不通过，设置一个变量来存储原因
-          # 例如：REVIEW_STATUS="不通过，原因是..."
-          # 如果审核通过，设置一个变量来存储通过消息
-          # 例如：REVIEW_STATUS="通过"
-
-          # 示例逻辑：根据文件修改数量判断审核结果
-          CHANGED_FILES=$(git diff --name-only origin/master)
-          if [[ $(echo "$CHANGED_FILES" | wc -l) -gt 10 ]]; then
-            REVIEW_STATUS="不通过，修改文件数量超过10个"
-          else
-            REVIEW_STATUS="通过"
-          fi
-
-          echo "::set-output name=status::${REVIEW_STATUS}"
-
-      # 更新PR状态和添加评论
-      - name: Update PR status and add comment
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: pullRequest } = await github.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
-
-            let comment;
-            if (process.env.REVIEW_STATUS === '通过') {
-              comment = `
-                自动审核结果：审核通过！
-              `;
-              await github.pulls.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.issue.number,
-                state: 'approved'
-              });
-            } else {
-              comment = `
-                自动审核结果：${{ env.REVIEW_STATUS }}
-              `;
-              await github.pulls.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.issue.number,
-                state: 'changes_requested'
-              });
-            }
-
-            await github.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: comment
-            });
+#
+#      # 在这里添加您的自动审核逻辑
+#      - name: Run review script
+#        id: review
+#        run: |
+#          # 运行自动审核脚本或命令
+#          # 如果审核不通过，设置一个变量来存储原因
+#          # 例如：REVIEW_STATUS="不通过，原因是..."
+#          # 如果审核通过，设置一个变量来存储通过消息
+#          # 例如：REVIEW_STATUS="通过"
+#
+#          # 示例逻辑：根据文件修改数量判断审核结果
+#          CHANGED_FILES=$(git diff --name-only origin/master)
+#          if [[ $(echo "$CHANGED_FILES" | wc -l) -gt 10 ]]; then
+#            REVIEW_STATUS="不通过，修改文件数量超过10个"
+#          else
+#            REVIEW_STATUS="通过"
+#          fi
+#
+#          echo "::set-output name=status::${REVIEW_STATUS}"
+#
+#      # 更新PR状态和添加评论
+#      - name: Update PR status and add comment
+#        uses: actions/github-script@v4
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          script: |
+#            const { data: pullRequest } = await github.pulls.get({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              pull_number: context.issue.number
+#            });
+#
+#            let comment;
+#            if (process.env.REVIEW_STATUS === '通过') {
+#              comment = `
+#                自动审核结果：审核通过！
+#              `;
+#              await github.pulls.update({
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                pull_number: context.issue.number,
+#                state: 'approved'
+#              });
+#            } else {
+#              comment = `
+#                自动审核结果：${{ env.REVIEW_STATUS }}
+#              `;
+#              await github.pulls.update({
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                pull_number: context.issue.number,
+#                state: 'changes_requested'
+#              });
+#            }
+#
+#            await github.issues.createComment({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              issue_number: context.issue.number,
+#              body: comment
+#            });

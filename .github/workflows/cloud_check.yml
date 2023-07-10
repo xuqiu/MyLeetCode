@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: getToken
-        id: myRequest
+        id: getToken
         uses: fjogeleit/http-request-action@v1 #任务
         with:
           url: 'https://tcloudrunconsole.openapi.cloudrun.cloudbaseapp.cn/v2/login/serviceaccount'
@@ -22,7 +22,7 @@ jobs:
           echo ${{fromJson(steps.getToken.outputs.response).data.access_token}}
 
       - name: triggerFlow
-        id: myRequest
+        id: triggerFlow
         uses: fjogeleit/http-request-action@v1 #任务
         with:
           url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/execute?projectId=293&spaceId=600087'

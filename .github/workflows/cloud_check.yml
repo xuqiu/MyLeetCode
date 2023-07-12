@@ -14,31 +14,25 @@ jobs:
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json"}'
           data: '{ "parent_uid":"14955076510547972", "private_key": "PpaeApOVW+ygrCC5pKYJaOXFY1kQpG7kdr7KYS5VshgPJNlcKL7YU6KuEASY2PGIEG131TT2FUutRmnfPOMJLPbx06xReel8zIDMnLqQwuSh9d2f3yydS15bFkzpUaANKzOAivY7dTBeTZTkpkmveYqSLaPXHqgegXzYDOrRCSw=" }'
-#
-#      - name: triggerFlow
-#        id: triggerFlow
-#        uses: fjogeleit/http-request-action@v1 #任务
-#        with:
-#          url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/execute'
-#          method: 'POST'
-#          bearerToken: '${{fromJson(steps.getToken.outputs.response).data.access_token}}'
-#          customHeaders: '{"Content-Type": "application/json","x-node-id":"14955076510547972"}'
-#          data: '{"templateId":795,"branch":"master"}'
-#
-#      - name: Show Response #step按序执行,可获取上一步的返回结果
-#        run: |
-#          echo ${{ steps.triggerFlow.outputs.response }}
-#          echo ${{ steps.triggerFlow.outputs.headers }}
-#          echo ${{fromJson(steps.triggerFlow.outputs.response).result.recordId}}
 
-#      - name: waitingForExecution
-#        run: sleep 120
+      - name: triggerFlow
+        id: triggerFlow
+        uses: fjogeleit/http-request-action@v1 #任务
+        with:
+          url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/execute'
+          method: 'POST'
+          bearerToken: '${{fromJson(steps.getToken.outputs.response).data.access_token}}'
+          customHeaders: '{"Content-Type": "application/json","x-node-id":"14955076510547972"}'
+          data: '{"templateId":795,"branch":"master"}'
+
+      - name: waitingForExecution
+        run: sleep 120
 
       - name: getRecordInfo
         id: getRecordInfo
         uses: fjogeleit/http-request-action@v1 #任务
         with:
-          url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/3756'
+          url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/${{fromJson(steps.triggerFlow.outputs.response).result.recordId}}'
           method: 'GET'
           bearerToken: '${{fromJson(steps.getToken.outputs.response).data.access_token}}'
           customHeaders: '{"Content-Type": "application/json","x-node-id":"14955076510547972"}'
@@ -48,7 +42,7 @@ jobs:
         if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result != 'SUCCESS' }}
         uses: fjogeleit/http-request-action@v1 #任务
         with:
-          url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/3654/job/6053'
+          url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/${{fromJson(steps.triggerFlow.outputs.response).result.recordId}}/job/${{fromJson(steps.getRecordInfo.outputs.response).result.stageExecutions[0].jobExecutions[0].id}}'
           method: 'GET'
           bearerToken: '${{fromJson(steps.getToken.outputs.response).data.access_token}}'
           customHeaders: '{"Content-Type": "application/json","x-node-id":"14955076510547972"}'
@@ -60,7 +54,7 @@ jobs:
           echo "::error::${{fromJson(steps.getJobInfo.outputs.response).result.data.urgent}}"
           exit 1
 
-      - name: showError
+      - name: success
         if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result == 'SUCCESS' }}
         run: |
           echo 'Scan complete! ALl good!'

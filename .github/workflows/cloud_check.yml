@@ -39,7 +39,7 @@ jobs:
 
       - name: getJobInfo
         id: getJobInfo
-        if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result != 'SUCCESS' }}
+        if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result != 'PASSED' }}
         uses: fjogeleit/http-request-action@v1 #任务
         with:
           url: 'https://tdevstudio.openapi.cloudrun.cloudbaseapp.cn/webapi/v1/space/600087/project/5000012/pipeline/${{fromJson(steps.triggerFlow.outputs.response).result.recordId}}/job/${{fromJson(steps.getRecordInfo.outputs.response).result.stageExecutions[0].jobExecutions[0].id}}'
@@ -48,13 +48,13 @@ jobs:
           customHeaders: '{"Content-Type": "application/json","x-node-id":"14955076510547972"}'
 
       - name: showError
-        if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result != 'SUCCESS' }}
+        if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result != 'PASSED' }}
         run: |
           
           echo "::error::${{fromJson(steps.getJobInfo.outputs.response).result.data.urgent}}"
           exit 1
 
       - name: success
-        if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result == 'SUCCESS' }}
+        if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result == 'PASSED' }}
         run: |
           echo 'Scan complete! ALl good!'

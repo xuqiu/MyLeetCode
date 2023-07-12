@@ -56,8 +56,8 @@ jobs:
       - name: showError
         if: ${{ success() && fromJson(steps.getRecordInfo.outputs.response).result.result != 'SUCCESS' }}
         run: |
-          echo ${{fromJson(steps.getJobInfo.outputs.response).result.data.urgent}}
-          echo "::error::Custom error message"
+          
+          echo "::error::${{fromJson(steps.getJobInfo.outputs.response).result.data.urgent}}"
           exit 1
 
       - name: showError

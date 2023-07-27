@@ -1,0 +1,18 @@
+{
+  "exact_dir/utils": [
+    {
+      "name": "facebook/hermes",
+      "version": "hermes-2022-08-16-RNv0.70.0-716d48baf36b0b326ab82f53207b8682c87fc017",
+      "score": 100,
+      "downloadUrl": "https://github.com/facebook/hermes/blob/hermes-2022-08-16-RNv0.70.0-716d48baf36b0b326ab82f53207b8682c87fc017/utils"
+    }
+  ],
+  "fuzzy_dir/utils/build-apple-framework.sh": [
+    {
+      "name": "facebook/hermes",
+      "version": "hermes-2022-08-16-RNv0.70.0-716d48baf36b0b326ab82f53207b8682c87fc017",
+      "score": 83,
+      "downloadUrl": "https://github.com/facebook/hermes/blob/hermes-2022-08-16-RNv0.70.0-716d48baf36b0b326ab82f53207b8682c87fc017/utils/build-apple-framework.sh"
+    }
+  ]
+}

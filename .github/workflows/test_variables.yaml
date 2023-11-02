@@ -15,6 +15,9 @@ jobs:
       Greeting: Hello
     steps:
       - name: "Say Hello Mona it's Monday"
-        run: "echo $GITHUB_REPOSITORY 111 ${{ github.event.pull_request.head.repo.url }} 222 $GITHUB_BASE_REF 333 $GITHUB_HEAD_REF bbb ${{vars.APP_ID}} ccc ${{secrets.ALI_PID}} Today is $Greeting!"
+        run: |
+          echo "$GITHUB_REPOSITORY 111 ${{ github.event.pull_request.head.repo.url }} 222 $GITHUB_BASE_REF 333 $GITHUB_HEAD_REF bbb ${{vars.APP_ID}} ccc ${{secrets.ALI_PID}} Today is $Greeting!"
+          echo "333"
+
         env:
           First_Name: Mona

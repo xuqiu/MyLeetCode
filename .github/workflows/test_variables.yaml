@@ -14,6 +14,6 @@ jobs:
       Greeting: Hello
     steps:
       - name: "Say Hello Mona it's Monday"
-        run: "ppp $env.First_Name aaa $APP_ID bbb ${{vars.APP_ID}}  Today is $Greeting!"
+        run: "echo ${{process.env.GITHUB_REPOSITORY}} aaa ${{process.env.GITHUB_BASE_REF}} aaa ${{process.env.GITHUB_HEAD_REF}} bbb ${{vars.APP_ID}}  Today is $Greeting!"
         env:
           First_Name: Mona

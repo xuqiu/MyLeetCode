@@ -1,6 +1,7 @@
 name: Greeting on variable day
 
 on:
+  pull_request:
   push:
 
 env:

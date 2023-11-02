@@ -13,6 +13,6 @@ jobs:
       Greeting: Hello
     steps:
       - name: "Say Hello Mona it's Monday"
-        run: echo "$env.First_Name aaa $APP_ID bbb ${{env.APP_ID}}  Today is $Greeting!"
+        run: echo "$env.First_Name aaa $APP_ID bbb ${{vars.APP_ID}}  Today is $Greeting!"
         env:
           First_Name: Mona

@@ -14,6 +14,6 @@ jobs:
       Greeting: Hello
     steps:
       - name: "Say Hello Mona it's Monday"
-        run: "echo $GITHUB_REPOSITORY aaa $GITHUB_BASE_REF aaa $GITHUB_HEAD_REF bbb ${{vars.APP_ID}}  Today is $Greeting!"
+        run: "echo $GITHUB_REPOSITORY 111 $GITHUB_HEAD_REPOSITORY 222 $GITHUB_BASE_REF 333 $GITHUB_HEAD_REF bbb ${{vars.APP_ID}}  Today is $Greeting!"
         env:
           First_Name: Mona

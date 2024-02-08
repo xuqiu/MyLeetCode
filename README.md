@@ -17,4 +17,4 @@ print("Current date:", current_date)
 print("Current date and time:", current_datetime_str)
 ```
 
-[Run](http://localhost:3000/mRYF)
+[Run](http://localhost:3000/mRYF){:target="_blank"}

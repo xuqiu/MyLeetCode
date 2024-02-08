@@ -16,5 +16,4 @@ print("Current time (24-hour format):", current_time)
 print("Current date:", current_date)
 print("Current date and time:", current_datetime_str)
 ```
-
 [Run](https://run-test.oscollege.net/KnUK)

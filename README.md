@@ -1,6 +1,6 @@
 
 #### Normal code fence as usual
-``` python [Run](https://run-test.oscollege.net/KnUK)
+``` python
 import datetime
 
 # Get current date and time
@@ -16,3 +16,4 @@ print("Current time (24-hour format):", current_time)
 print("Current date:", current_date)
 print("Current date and time:", current_datetime_str)
 ```
+[Run](https://run-test.oscollege.net/KnUK)

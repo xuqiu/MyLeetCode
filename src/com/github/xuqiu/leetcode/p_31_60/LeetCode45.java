@@ -5,22 +5,24 @@ import org.junit.Test;
 /**
  * @author xuqiu
  * @since 2024-02-18
- * refine to 3ms
+ * refine to 2ms
  */
 public class LeetCode45 {
     public int jump(int[] nums) {
         if (nums.length == 1) return 0;
         if (nums[0] >= nums.length - 1) return 1;
-        int[] stepTo = new int[nums.length];
-        stepTo[0] = 0;
-        stepTo[1] = nums[0];
+        int stepFrom = 1;
+        int stepTo = nums[0];
         for (int step = 1; step < nums.length; step++) {
-            for (int i = stepTo[step-1]+1; i <= stepTo[step]; i++) {
+            int nextTo = stepTo;
+            for (int i = stepFrom; i <= stepTo; i++) {
                 if (i + nums[i] >= nums.length - 1) {
                     return step + 1;
                 }
-                stepTo[step + 1] = Math.max(stepTo[step +1], i + nums[i]);
+                nextTo = Math.max(nextTo, i + nums[i]);
             }
+            stepFrom = stepTo+1;
+            stepTo = nextTo;
         }
         return 0;
     }

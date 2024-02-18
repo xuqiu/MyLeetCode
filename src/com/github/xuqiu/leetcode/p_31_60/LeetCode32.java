@@ -1,4 +1,4 @@
-package com.github.xuqiu.leetcode;
+package com.github.xuqiu.leetcode.p_31_60;
 
 import java.util.ArrayDeque;
 import java.util.BitSet;

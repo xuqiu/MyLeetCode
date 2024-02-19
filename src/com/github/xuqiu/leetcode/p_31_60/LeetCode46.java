@@ -5,18 +5,20 @@ import org.junit.Test;
 import java.util.*;
 
 /**
- * 还是忍不住纠结了一下, 实现了一个IntArrayList, 优化到了2ms, 内存也是beats了90+
+ * 优化到了1ms Beats 95.86%
  */
 public class LeetCode46 {
+    int size;
     public List<List<Integer>> permute(int[] nums) {
+        size = nums.length;
         List<List<Integer>> result = new ArrayList<>();
-        if (nums.length<=1){
+        if (size<=1){
             return List.of(new IntArrayList(nums));
         }
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < size; i++) {
             IntArrayList numList = new IntArrayList(nums);
             if (i>0) {
-                Collections.swap(numList, 0, i);
+                numList.swap(0, i);
             }
             result.addAll(permute(numList, 1));
         }
@@ -24,13 +26,20 @@ public class LeetCode46 {
     }
     private List<List<Integer>> permute(IntArrayList numList, int from) {
         IntArrayList copiedList = new IntArrayList(numList.value);
-        if (from == numList.size()-1) {
+        if (from == size-1) {
             return Collections.singletonList(copiedList);
         }
+        if (from == size-2) {
+            IntArrayList integers = new IntArrayList(copiedList.value);
+            integers.swap(size-1, size-2);
+            return List.of(
+                    copiedList,integers
+            );
+        }
         List<List<Integer>> result = new ArrayList<>();
-        for (int i = from; i < copiedList.size(); i++) {
+        for (int i = from; i < size; i++) {
             if (i>from) {
-                Collections.swap(copiedList, from, i);
+                copiedList.swap(from, i);
             }
             List<List<Integer>> permute = permute(copiedList, from+1);
             result.addAll(permute);
@@ -40,11 +49,9 @@ public class LeetCode46 {
 
     class IntArrayList implements List<Integer>{
         protected int[] value;
-        int size;
 
         public IntArrayList(int[] value) {
-            this.value = Arrays.copyOf(value,value.length);
-            this.size = value.length;
+            this.value = Arrays.copyOf(value,size);
         }
 
         public String toString() {
@@ -53,7 +60,7 @@ public class LeetCode46 {
 
         @Override
         public int size() {
-            return value.length;
+            return size;
         }
 
         @Override
@@ -139,10 +146,14 @@ public class LeetCode46 {
 
         @Override
         public Integer set(int index, Integer element) {
-            Objects.checkIndex(index, size);
-            Integer oldValue = value[index];
+            int oldValue = value[index];
             value[index] = element;
             return oldValue;
+        }
+        public void swap(int i, int j) {
+            int temp = value[i];
+            value[i] = value[j];
+            value[j] = temp;
         }
 
         @Override

@@ -26,3 +26,5 @@ print("Current date and time:", current_datetime_str)
 [Run](https://run-test.oscollege.net/Ny4L)
 
 [Run](https://run-test.oscollege.net/z1EP)
+
+[链接](view-source:https://test.oscollege.net/)
